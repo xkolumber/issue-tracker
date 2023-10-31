@@ -8,6 +8,9 @@ const LatestIssues = async () => {
   const issues = await prisma.issue.findMany({
     orderBy: { createdAt: "desc" },
     take: 5,
+    include: {
+      assignedToUser: true,
+    },
   });
   return (
     <Card>
@@ -24,12 +27,14 @@ const LatestIssues = async () => {
                     <Link href={`/issues/${issue.id}`}> {issue.title}</Link>
                     <IssueStatusBadge status={issue.status} />
                   </Flex>
-                  <Avatar
-                    src="https://lh3.googleusercontent.com/a/ACg8ocIpMcvlx61j259bKC9lsMXw1pyLEPDqUJClZZZWZ-Wc=s96-c"
-                    fallback="?"
-                    size="2"
-                    radius="full"
-                  />
+                  {issue.assignedToUser && (
+                    <Avatar
+                      src={issue.assignedToUser.image!}
+                      fallback="?"
+                      size="2"
+                      radius="full"
+                    />
+                  )}
                 </Flex>
               </Table.Cell>
             </Table.Row>

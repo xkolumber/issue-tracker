@@ -57,4 +57,6 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   );
 };
 
+export const dynamic = "force-dynamic";
+
 export default AssigneeSelect;
